@@ -1404,7 +1404,7 @@ article.type-projet header .column {
 
 @media screen and (min-width: 900px) {
     article.type-projet header .column {
-        min-height: 90vh;
+        min-height: 70vh;
     }
 
     .column#right {
