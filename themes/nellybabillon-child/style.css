@@ -613,7 +613,8 @@ img.clickhere {
     display: flex;
     justify-content: center;
     grid-column: 2 / span 1;
-    grid-row: 1;
+    /* Toute la hauteur du CV : repère commun pour les .marker en position absolute + top */
+    grid-row: 1 / -1;
     height: 100%;
     width: 100%;
     z-index: 3;
@@ -933,6 +934,7 @@ p.txt-bio {
     font-weight: normal;
     max-width: 80%;
     width: 100%;
+    margin-bottom: 0;
 }
 
 .col-left {

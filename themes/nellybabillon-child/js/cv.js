@@ -11,7 +11,7 @@ console.log(allCvDiv)
 
 // Add markers on scroll
 
-let expTitleDiv = document.querySelectorAll('.experiences-title');
+let expYearDiv = document.querySelectorAll('.exp-year');
 let colLeft = document.querySelectorAll('.col-left');
 let colRight = document.querySelectorAll('.col-right');
 
@@ -29,30 +29,57 @@ function getOffset( el ) {
     return { top: _y};
 }
 
-//Add markers to each title
+// Marqueurs alignés sur .exp-year : offsetTop (même référence que le layout) évite les décalages
+// causés par getBoundingClientRect + transform / layout incomplet au premier paint.
 
-expTitleDiv.forEach((item)=>{
+const MARKER_CIRCLE = 40;
+
+function markerTopForExpYear(expYearEl) {
+	if (!lineWrapper) return 0;
+	// Même offsetParent que line-wrapper (.cv-container) : cohérent avec position:absolute + top en px
+	return (
+		expYearEl.offsetTop -
+		lineWrapper.offsetTop +
+		(expYearEl.offsetHeight - MARKER_CIRCLE) / 2
+	);
+}
+
+function updateMarkerPositions() {
+	if (!lineWrapper) return;
+	const markers = document.querySelectorAll('.marker');
+	const years = document.querySelectorAll('.exp-year');
+	markers.forEach((marker, i) => {
+		const y = years[i];
+		if (!y) return;
+		marker.style.top = markerTopForExpYear(y) + 'px';
+	});
+}
+
+function debounce(fn, ms) {
+	let t;
+	return function () {
+		clearTimeout(t);
+		t = setTimeout(fn, ms);
+	};
+}
+
+expYearDiv.forEach((item) => {
 	let newMarker = document.createElement("div");
 	let newCircle = document.createElement("div");
-	let newCircleLine = document.createElement("span");
 
-	newMarker.classList.add("marker")
-	newCircle.classList.add("circle")
+	newMarker.classList.add("marker");
+	newCircle.classList.add("circle");
 
-	newMarker.appendChild(newCircle)
+	newMarker.appendChild(newCircle);
 
-	lineWrapper.appendChild(newMarker)
+	lineWrapper.appendChild(newMarker);
 
-	itemPos = getOffset(item).top
-	newMarker.style.top = itemPos + "px"	
-
-	if(item.parentElement.classList.contains('col-left')){
-		newMarker.classList.add('m-left')
+	if (item.classList.contains("col-left")) {
+		newMarker.classList.add("m-left");
 	} else {
-		newMarker.classList.add('m-right')
+		newMarker.classList.add("m-right");
 	}
-
-})
+});
 
 let markerDiv = document.querySelectorAll('.marker')
 
@@ -70,6 +97,14 @@ let winH = Math.max(document.body.offsetHeight)
 
 svgDiv.setAttribute('height', winH)
 lineSVG.setAttribute('y2', winH)
+
+updateMarkerPositions();
+requestAnimationFrame(() => requestAnimationFrame(updateMarkerPositions));
+window.addEventListener('load', updateMarkerPositions);
+window.addEventListener('resize', debounce(updateMarkerPositions, 150));
+if (document.fonts && document.fonts.ready) {
+	document.fonts.ready.then(updateMarkerPositions);
+}
 
 let length = lineSVG.getTotalLength();
 
