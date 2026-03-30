@@ -5,7 +5,7 @@ require_once get_stylesheet_directory() . '/inc/acf-cv.php';
 
 // Enqueue child theme styles
 function enqueue_child_styles() {
-    wp_enqueue_style('child-style', get_stylesheet_directory_uri() . '/style.css', array('parent-style'), '1.0');
+    wp_enqueue_style('child-style', get_stylesheet_directory_uri() . '/style.css', array('parent-style'), '2.0');
 }
 
 add_action('wp_enqueue_scripts', 'enqueue_child_styles');
