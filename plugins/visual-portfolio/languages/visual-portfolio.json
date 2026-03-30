@@ -8,13 +8,13 @@
          "Visual Portfolio, Posts & Image Gallery": [
             ""
          ],
+         "https://www.visualportfolio.com/?utm_source=wordpress.org&utm_medium=readme&utm_campaign=byline": [
+            ""
+         ],
          "Modern gallery and portfolio plugin with advanced layouts editor. Clean and powerful gallery styles with enormous settings in the Gutenberg block.": [
             ""
          ],
          "Visual Portfolio Team": [
-            ""
-         ],
-         "https://www.visualportfolio.com/?utm_source=wordpress.org&utm_medium=readme&utm_campaign=byline": [
             ""
          ],
          "Visual Portfolio": [
@@ -59,7 +59,7 @@
          "Columns": [
             ""
          ],
-         "Images Aspect Ratio": [
+         "Media Aspect Ratio": [
             ""
          ],
          "Horizontal Order": [
@@ -203,7 +203,10 @@
          "Posts Settings": [
             ""
          ],
-         "Images Settings": [
+         "Media Settings": [
+            ""
+         ],
+         "Taxonomies Settings": [
             ""
          ],
          "Social Stream Settings": [
@@ -230,7 +233,10 @@
          "Posts": [
             ""
          ],
-         "Images": [
+         "Media": [
+            ""
+         ],
+         "Taxonomies": [
             ""
          ],
          "Social": [
@@ -249,9 +255,6 @@
             ""
          ],
          "Excluded Posts": [
-            ""
-         ],
-         "Taxonomies": [
             ""
          ],
          "Taxonomies Relation": [
@@ -350,10 +353,16 @@
          "Video": [
             ""
          ],
-         "Video URL": [
+         "URL": [
+            ""
+         ],
+         "By default used full media url, you can use custom one": [
             ""
          ],
          "https://...": [
+            ""
+         ],
+         "Video URL": [
             ""
          ],
          "Full list of supported links": [
@@ -362,10 +371,7 @@
          "see here": [
             ""
          ],
-         "URL": [
-            ""
-         ],
-         "By default used full image url, you can use custom one": [
+         "Author": [
             ""
          ],
          "Author Name": [
@@ -374,13 +380,28 @@
          "Author URL": [
             ""
          ],
-         "Support for Audio format": [
+         "Advanced": [
             ""
          ],
-         "Custom image for Popup": [
+         "Unlock advanced image and video options such as:": [
             ""
          ],
-         "Custom image for hover state": [
+         "Image albums": [
+            ""
+         ],
+         "Audio formats": [
+            ""
+         ],
+         "Video thumbnails": [
+            ""
+         ],
+         "Thumbnails for hover state.": [
+            ""
+         ],
+         "Custom popup image": [
+            ""
+         ],
+         "Picture ID for deep linking": [
             ""
          ],
          "Items Title Source": [
@@ -417,6 +438,9 @@
             ""
          ],
          "Protect your works using watermarks, password, and age gate": [
+            ""
+         ],
+         "Display taxonomy archives such as categories, tags, and custom taxonomies.": [
             ""
          ],
          "Display social feeds such as Instagram, Youtube, Flickr, X, etc...": [
@@ -570,9 +594,6 @@
             ""
          ],
          "Popup": [
-            ""
-         ],
-         "Advanced": [
             ""
          ],
          "Target": [
@@ -872,7 +893,13 @@
          "Portfolio Categories": [
             ""
          ],
+         "Portfolio Category": [
+            ""
+         ],
          "Portfolio Tags": [
+            ""
+         ],
+         "Portfolio Tag": [
             ""
          ],
          "Tags": [
@@ -950,7 +977,7 @@
          "Visual Portfolio and Visual Portfolio Pro should not be active at the same time. We've automatically deactivated Visual Portfolio Pro.": [
             ""
          ],
-         "Images Rounded Corners": [
+         "Media Rounded Corners": [
             ""
          ],
          "Caption Align": [
@@ -971,6 +998,45 @@
          "Sort by title (Z-A)": [
             ""
          ],
+         "video": [
+            ""
+         ],
+         "audio": [
+            ""
+         ],
+         "gallery": [
+            ""
+         ],
+         "Post": [
+            ""
+         ],
+         "Page": [
+            ""
+         ],
+         "Product": [
+            ""
+         ],
+         "Shop": [
+            ""
+         ],
+         "Project": [
+            ""
+         ],
+         "Work": [
+            ""
+         ],
+         "image": [
+            ""
+         ],
+         "social post": [
+            ""
+         ],
+         "item": [
+            ""
+         ],
+         "Open %s": [
+            ""
+         ],
          "%s ago": [
             ""
          ],
@@ -987,6 +1053,9 @@
             ""
          ],
          "Required parameters are missing.": [
+            ""
+         ],
+         "Invalid content source: %s": [
             ""
          ],
          "Sorry, you are not allowed to get filter items.": [
@@ -1008,6 +1077,9 @@
             ""
          ],
          "Settings": [
+            ""
+         ],
+         "Images": [
             ""
          ],
          "Popup & Lightbox": [
@@ -1205,6 +1277,21 @@
          "Display Slideshow": [
             ""
          ],
+         "Albums": [
+            ""
+         ],
+         "Isolated Album Popup": [
+            ""
+         ],
+         "When enabled, clicking an album opens a popup with only that album's images. Navigation to other items is disabled.": [
+            ""
+         ],
+         "Album Lazy Load Threshold": [
+            ""
+         ],
+         "Number of album images to render inline. Additional images are loaded via REST API when the popup opens.": [
+            ""
+         ],
          "Quick View": [
             ""
          ],
@@ -1253,103 +1340,145 @@
          "-- Select Page --": [
             ""
          ],
+         "Visual Portfolio Pro active": [
+            ""
+         ],
+         "Your premium portfolio features are already unlocked.": [
+            ""
+         ],
+         "Use the same visual workflow for galleries, post grids, and portfolio layouts, now with the additional Pro features already available on this site.": [
+            ""
+         ],
+         "Core workflow included in Pro": [
+            ""
+         ],
+         "These are the essential Visual Portfolio building blocks you can use across both free and Pro setups.": [
+            ""
+         ],
+         "Advantages already included with Pro": [
+            ""
+         ],
+         "These premium capabilities are already enabled because you are using Visual Portfolio Pro.": [
+            ""
+         ],
+         "Free version active": [
+            ""
+         ],
+         "Build a modern portfolio experience in WordPress.": [
+            ""
+         ],
+         "Create galleries, post grids, and polished portfolio layouts with a workflow that stays visual from setup to launch.": [
+            ""
+         ],
+         "Everything you can build right away": [
+            ""
+         ],
+         "Start with the core Visual Portfolio workflow and expand later only if your projects need more advanced features.": [
+            ""
+         ],
+         "Need more advanced portfolio features?": [
+            ""
+         ],
+         "Pro expands the same workflow with features aimed at client work, content protection, social sources, and deeper customization.": [
+            ""
+         ],
+         "Visual gallery builder": [
+            ""
+         ],
+         "Create galleries, portfolios, and post grids visually in Gutenberg with live preview and flexible controls.": [
+            ""
+         ],
+         "Flexible layouts and styles": [
+            ""
+         ],
+         "Mix grid, masonry, justified, slider, and tiles layouts with polished hover styles for different creative workflows.": [
+            ""
+         ],
+         "Dynamic query builder": [
+            ""
+         ],
+         "Display portfolio items, blog posts, or any post type and filter them by taxonomy, author, date, and more.": [
+            ""
+         ],
+         "Fast by design": [
+            ""
+         ],
+         "Assets are loaded only where needed, so galleries stay lightweight and feel native on the front end.": [
+            ""
+         ],
+         "Advanced media experience": [
+            ""
+         ],
+         "Present images, videos, and audio in one portfolio with responsive lightbox behavior and touch-friendly navigation.": [
+            ""
+         ],
+         "Filtering, sorting, and pagination": [
+            ""
+         ],
+         "Help visitors explore larger collections with category filters, sort controls, load more, and infinite scrolling.": [
+            ""
+         ],
+         "Video items": [
+            ""
+         ],
+         "Add video items to image galleries and post grids, then autoplay them on open or trigger playback on hover.": [
+            ""
+         ],
+         "Albums and gallery format": [
+            ""
+         ],
+         "Build nested galleries and output album-style content across image galleries, posts, and taxonomy grids.": [
+            ""
+         ],
+         "Taxonomy grids": [
+            ""
+         ],
+         "Use taxonomy terms as a dedicated gallery source and turn categories, tags, or custom taxonomies into visual grids.": [
+            ""
+         ],
+         "Proofing workflows": [
+            ""
+         ],
+         "Collaborate with clients on image selections and benefit from self-healing proofing permalinks.": [
+            ""
+         ],
+         "Content protection": [
+            ""
+         ],
+         "Protect galleries with watermarks, age gate rules, and right click protection.": [
+            ""
+         ],
+         "Advanced popups": [
+            ""
+         ],
+         "Use deep linking and open posts or pages in popups alongside your media galleries.": [
+            ""
+         ],
+         "Social sources and query controls": [
+            ""
+         ],
+         "Extend projects with social feeds, advanced query controls, and AJAX-driven performance improvements.": [
+            ""
+         ],
+         "Branding and effects": [
+            ""
+         ],
+         "Unlock hover images, extra visual effects, white label options, and developer-friendly extensibility.": [
+            ""
+         ],
+         "And more...": [
+            ""
+         ],
+         "Get access to many more Pro features for layout control, client work, integrations, performance, and advanced customization.": [
+            ""
+         ],
          "Visual Portfolio Welcome Screen": [
             ""
          ],
-         "Thank you for choosing Visual Portfolio - The Modern Gallery, Posts Grid and Portfolio Plugin for WordPress.": [
+         "Compare Free vs Pro": [
             ""
          ],
-         "You're using free Visual Portfolio plugin. Enjoy! 🙂": [
-            ""
-         ],
-         "Want to get more power with Pro? Visit %s": [
-            ""
-         ],
-         "Main Features & Solutions": [
-            ""
-         ],
-         "Visual Gallery Builder": [
-            ""
-         ],
-         "Build your portfolio and gallery blocks with no coding knowledge. Thanks to Gutenberg page builder you are able to create and customize galleries visually.": [
-            ""
-         ],
-         "Optimized to be Fast as Native": [
-            ""
-         ],
-         "Due to the modular code structure, all scripts and styles are loaded only when they are needed for the current page that displays your gallery.": [
-            ""
-         ],
-         "Layouts": [
-            ""
-         ],
-         "Our gallery plugin shipped with popular layouts such as Masonry and Justified (Flickr).": [
-            ""
-         ],
-         "Visual Effects": [
-            ""
-         ],
-         "Showcase your projects ang gallery images with clean and beautiful visual styles.": [
-            ""
-         ],
-         "Easy to Customize": [
-            ""
-         ],
-         "The gallery block with live preview includes a lot of design settings that are point-and-click, no coding knowledge required.": [
-            ""
-         ],
-         "Posts Query Builder": [
-            ""
-         ],
-         "Display posts, portfolios, and any other post types, filter by taxonomies, author, date ranges, and much more options.": [
-            ""
-         ],
-         "Powerful Lightbox": [
-            ""
-         ],
-         "Visual Portfolio uses scripts for lightboxes that is high performance, mobile optimized and retina-ready.": [
-            ""
-         ],
-         "Video and 🎵 Audio Support": [
-            ""
-         ],
-         "Present not only photos, but also audios and videos within a single gallery.": [
-            ""
-         ],
-         "More Features": [
-            ""
-         ],
-         "Upgrade to Visual Portfolio Pro": [
-            ""
-         ],
-         "and Get More Power!": [
-            ""
-         ],
-         "Stylish Effects": [
-            ""
-         ],
-         "Watermarks Protection": [
-            ""
-         ],
-         "Age Gate Protection": [
-            ""
-         ],
-         "Instagram-like Image Filters": [
-            ""
-         ],
-         "Advanced Query Settings": [
-            ""
-         ],
-         "Popup for Posts and Pages": [
-            ""
-         ],
-         "Popup Deep Linking": [
-            ""
-         ],
-         "And much more...": [
-            ""
-         ],
-         "Upgrade to PRO Now": [
+         "See Pro details": [
             ""
          ],
          "Currently displaying all items": [
@@ -1373,9 +1502,6 @@
          "Page %s": [
             ""
          ],
-         "Author": [
-            ""
-         ],
          "By %s": [
             ""
          ],
@@ -1387,21 +1513,21 @@
          ],
          "%s Comment": [
             "",
-            "%s Comments"
+            ""
          ],
          "Reading Time": [
             ""
          ],
          "%s Min Read": [
             "",
-            "%s Mins Read"
+            ""
          ],
          "Views": [
             ""
          ],
          "%s View": [
             "",
-            "%s Views"
+            ""
          ],
          "Previous Slide": [
             ""
@@ -1475,6 +1601,12 @@
          "Remove": [
             ""
          ],
+         "Image focal point": [
+            ""
+         ],
+         "Top": [
+            ""
+         ],
          "Loaded automatically from the image Title": [
             ""
          ],
@@ -1490,46 +1622,28 @@
          "Edit Gallery": [
             ""
          ],
-         "Add Images": [
+         "Add Media": [
             ""
          ],
-         "Replace Image": [
+         "Additional media info": [
             ""
          ],
-         "Remove Image from Gallery": [
+         "File URL": [
             ""
          ],
-         "Hide Additional Info": [
+         "Attachment page": [
             ""
          ],
-         "Show Additional Info": [
+         "Edit details": [
             ""
          ],
-         "File name:": [
+         "Previous image": [
             ""
          ],
-         "File type:": [
-            ""
-         ],
-         "File URL:": [
-            ""
-         ],
-         "Copy URL to Clipboard": [
-            ""
-         ],
-         "Copied!": [
-            ""
-         ],
-         "View attachment page": [
-            ""
-         ],
-         "Edit more details": [
+         "Next image": [
             ""
          ],
          "Select": [
-            ""
-         ],
-         "Image Settings": [
             ""
          ],
          "Select All": [
@@ -1559,9 +1673,8 @@
          "Bulk Image Settings": [
             ""
          ],
-         "Showing %1$s of %2$s Image": [
-            "",
-            "Showing %1$s of %2$s Images"
+         "Showing %1$s of %2$s media items": [
+            ""
          ],
          "Show More": [
             ""
@@ -1573,6 +1686,9 @@
             ""
          ],
          "Less": [
+            ""
+         ],
+         "Replace": [
             ""
          ],
          "Type to search…": [
@@ -1614,9 +1730,6 @@
          "Focal point will be used in Visual Portfolio layouts only:": [
             ""
          ],
-         "Top": [
-            ""
-         ],
          "Video will be used in %s layouts only. Full list of supported links": [
             ""
          ],
@@ -1639,6 +1752,9 @@
             ""
          ],
          "All Items": [
+            ""
+         ],
+         "Copied!": [
             ""
          ],
          "This Saved Layout": [

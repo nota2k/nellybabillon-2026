@@ -37,6 +37,20 @@ class Visual_Portfolio_Archive_Mapping {
 	private $permalinks = array();
 
 	/**
+	 * Cached portfolio slug.
+	 *
+	 * @var string|null
+	 */
+	private static $cached_slug = null;
+
+	/**
+	 * Cached portfolio label.
+	 *
+	 * @var string|null
+	 */
+	private static $cached_label = null;
+
+	/**
 	 * Visual_Portfolio_Archive_Mapping constructor.
 	 */
 	public function __construct() {
@@ -762,7 +776,7 @@ class Visual_Portfolio_Archive_Mapping {
 	 * @return void
 	 */
 	public function init_rewrite_rules() {
-		$slug = get_post_field( 'post_name', $this->archive_page );
+		$slug = self::get_portfolio_slug();
 		add_rewrite_tag( '%vp_page_query%', '([^&]+)' );
 		add_rewrite_tag( '%vp_page_archive%', '([^&]+)' );
 		// We've added this custom category tag for cases where categories are used in conjunction with pagination on archive and other taxonomy pages,
@@ -782,6 +796,27 @@ class Visual_Portfolio_Archive_Mapping {
 				'top'
 			);
 		}
+		// Add feed rewrite rules for portfolio archive.
+		add_rewrite_rule(
+			'^' . $slug . '/feed/?$',
+			'index.php?post_type=portfolio&feed=rss2',
+			'top'
+		);
+
+		// Add feed rewrite rules for portfolio categories.
+		add_rewrite_rule(
+			'^' . $this->permalinks['category_base'] . '/([^/]*)/feed/?$',
+			'index.php?post_type=portfolio&portfolio_category=$matches[1]&feed=rss2',
+			'top'
+		);
+
+		// Add feed rewrite rules for portfolio tags.
+		add_rewrite_rule(
+			'^' . $this->permalinks['tag_base'] . '/([^/]*)/feed/?$',
+			'index.php?post_type=portfolio&portfolio_tag=$matches[1]&feed=rss2',
+			'top'
+		);
+
 		add_rewrite_rule(
 			'^' . $this->permalinks['category_base'] . '/([^/]*)/page/?([0-9]{1,})/?',
 			'index.php?post_type=portfolio&vp_page_archive=1&portfolio_category=$matches[1]&vp_category=$matches[1]&vp_page_query=$matches[2]',
@@ -837,6 +872,11 @@ class Visual_Portfolio_Archive_Mapping {
 			return;
 		}
 
+		// Skip override for any feeds to ensure RSS feeds work properly.
+		if ( is_feed() ) {
+			return;
+		}
+
 		$post_type = 'portfolio';
 
 		// Maybe Redirect.
@@ -857,7 +897,7 @@ class Visual_Portfolio_Archive_Mapping {
 					(int) $object_id === (int) $this->archive_page
 				)
 			) &&
-			'' !== $this->archive_page && $query->is_main_query()
+			'' !== $this->archive_page && $query->is_main_query() && ! is_feed()
 		) {
 			$post_id = absint( $this->archive_page );
 			$post_id = Visual_Portfolio_3rd_WPML::get_object_id( $post_id );
@@ -1197,18 +1237,25 @@ class Visual_Portfolio_Archive_Mapping {
 	 * @return string
 	 */
 	public static function get_portfolio_slug() {
+		if ( null !== self::$cached_slug ) {
+			return self::$cached_slug;
+		}
+
 		// When deleting the archive page, we leave the old slug without overwriting the permalinks.
 		// In this case, instead of the archives page, a standard archives page with the corresponding template is substituted.
-		$custom_slug = _x( 'portfolio', 'default-slug', 'visual-portfolio' );
+		self::$cached_slug = _x( 'portfolio', 'default-slug', 'visual-portfolio' );
 
 		$archive_page = Settings::get_option( 'portfolio_archive_page', 'vp_general' );
 
-		if ( isset( $archive_page ) && ! empty( $archive_page ) ) {
-			// If there is a selected page of archives, we substitute its slug.
-			$custom_slug = get_post_field( 'post_name', $archive_page );
+		if ( ! empty( $archive_page ) ) {
+			$post = get_post( $archive_page );
+
+			if ( $post instanceof WP_Post && ! empty( $post->post_name ) ) {
+				self::$cached_slug = $post->post_name;
+			}
 		}
 
-		return $custom_slug;
+		return self::$cached_slug;
 	}
 
 	/**
@@ -1217,18 +1264,36 @@ class Visual_Portfolio_Archive_Mapping {
 	 * @return string
 	 */
 	public static function get_portfolio_label() {
-		// When deleting the archive page, we leave the old slug without overwriting the permalinks.
+		if ( null !== self::$cached_label ) {
+			return self::$cached_label;
+		}
+
+		// When deleting the archive page, we leave the old label without overwriting the permalinks.
 		// In this case, instead of the archives page, a standard archives page with the corresponding template is substituted.
-		$custom_slug = _x( 'Portfolio', 'default-label', 'visual-portfolio' );
+		self::$cached_label = _x( 'Portfolio', 'default-label', 'visual-portfolio' );
 
 		$archive_page = Settings::get_option( 'portfolio_archive_page', 'vp_general' );
 
-		if ( isset( $archive_page ) && ! empty( $archive_page ) ) {
-			// If there is a selected page of archives, we substitute its slug.
-			$custom_slug = get_post_field( 'post_title', $archive_page );
+		if ( ! empty( $archive_page ) ) {
+			$post = get_post( $archive_page );
+
+			if ( $post instanceof WP_Post && ! empty( $post->post_title ) ) {
+				self::$cached_label = $post->post_title;
+			}
 		}
 
-		return $custom_slug;
+		return self::$cached_label;
+	}
+
+	/**
+	 * Reset cached portfolio slug and label.
+	 * This is primarily used for testing purposes.
+	 *
+	 * @return void
+	 */
+	public static function reset_cache() {
+		self::$cached_slug  = null;
+		self::$cached_label = null;
 	}
 
 	/**

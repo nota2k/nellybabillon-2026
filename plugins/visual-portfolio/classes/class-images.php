@@ -104,6 +104,10 @@ class Visual_Portfolio_Images {
 
 	/**
 	 * Get blocked attributes to prevent our images lazy loading.
+	 *
+	 * Supports two formats:
+	 * 1. Attribute name only (e.g., 'data-skip-lazy')
+	 * 2. Attribute with value (e.g., 'fetchpriority="high"')
 	 */
 	public static function get_image_blocked_attributes() {
 		$blocked_attributes = array(
@@ -119,6 +123,7 @@ class Visual_Portfolio_Images {
 			'data-envira-src',
 			'fullurl',
 			'lazy-slider-img',
+			'fetchpriority="high"',
 		);
 
 		/**
@@ -316,7 +321,17 @@ class Visual_Portfolio_Images {
 		$blocked_attributes = self::get_image_blocked_attributes();
 
 		foreach ( $blocked_attributes as $attr ) {
-			if ( isset( $attributes[ $attr ] ) ) {
+			// Check if attribute contains a value (e.g., 'fetchpriority="high"').
+			if ( false !== strpos( $attr, '=' ) ) {
+				$parts      = explode( '=', $attr, 2 );
+				$attr_name  = trim( $parts[0] );
+				$attr_value = trim( $parts[1], '"' );
+
+				if ( isset( $attributes[ $attr_name ] ) && $attr_value === $attributes[ $attr_name ] ) {
+					return true;
+				}
+			} elseif ( isset( $attributes[ $attr ] ) ) {
+				// Handle attribute name only (backward compatibility).
 				return true;
 			}
 		}
@@ -334,12 +349,12 @@ class Visual_Portfolio_Images {
 	/**
 	 * Skip lazy loading using exclusion settings.
 	 *
-	 * @param boolean $return - default return value.
+	 * @param boolean $default_return - default return value.
 	 * @param array   $attributes - image attributes.
 	 *
 	 * @return boolean
 	 */
-	public static function add_lazyload_exclusions( $return, $attributes ) {
+	public static function add_lazyload_exclusions( $default_return, $attributes ) {
 		if ( ! empty( self::$lazyload_user_exclusions ) && ! empty( $attributes ) ) {
 			$full_attributes_string = '';
 
@@ -355,7 +370,7 @@ class Visual_Portfolio_Images {
 			}
 		}
 
-		return $return;
+		return $default_return;
 	}
 
 	/**

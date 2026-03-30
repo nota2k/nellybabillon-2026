@@ -145,16 +145,16 @@ class Visual_Portfolio_Gutenberg {
 	 * Transform block context to attributes array.
 	 *
 	 * @param array  $context Block context.
-	 * @param string $namespace Context namespace.
+	 * @param string $context_namespace Context namespace.
 	 * @return array
 	 */
-	public static function transform_context_to_attributes( $context, $namespace = 'vp' ) {
+	public static function transform_context_to_attributes( $context, $context_namespace = 'vp' ) {
 		if ( empty( $context ) || ! is_array( $context ) ) {
 			return array();
 		}
 
 		$transformed_attributes = array();
-		$namespace_prefix       = $namespace . '/';
+		$namespace_prefix       = $context_namespace . '/';
 
 		foreach ( $context as $key => $value ) {
 			// Check if the context key belongs to our namespace.
@@ -167,8 +167,12 @@ class Visual_Portfolio_Gutenberg {
 			}
 		}
 
-		// Convert modern attributes to legacy format.
-		$transformed_attributes = Visual_Portfolio_Convert_Attributes::modern_to_legacy( $transformed_attributes, true );
+		// Only convert to legacy format with defaults if we found namespace attributes.
+		// This check prevents attributes from being filled with default values.
+		// When there is no valid context matching the namespace.
+		if ( ! empty( $transformed_attributes ) ) {
+			$transformed_attributes = Visual_Portfolio_Convert_Attributes::modern_to_legacy( $transformed_attributes, true );
+		}
 
 		return $transformed_attributes;
 	}
@@ -204,6 +208,7 @@ class Visual_Portfolio_Gutenberg {
 				'plugin_version'           => VISUAL_PORTFOLIO_VERSION,
 				'plugin_name'              => visual_portfolio()->plugin_name,
 				'plugin_url'               => visual_portfolio()->plugin_url,
+				'pro'                      => visual_portfolio()->is_pro(),
 				'admin_url'                => get_admin_url(),
 				'attributes'               => $attributes,
 				'controls'                 => Visual_Portfolio_Controls::get_registered_array(),
@@ -218,6 +223,12 @@ class Visual_Portfolio_Gutenberg {
 			'visual-portfolio-gutenberg-custom-post-meta',
 			'build/gutenberg/custom-post-meta'
 		);
+		Visual_Portfolio_Assets::enqueue_style(
+			'visual-portfolio-gutenberg-custom-post-meta',
+			'build/gutenberg/custom-post-meta'
+		);
+		wp_style_add_data( 'visual-portfolio-gutenberg-custom-post-meta', 'rtl', 'replace' );
+		wp_style_add_data( 'visual-portfolio-gutenberg-custom-post-meta', 'suffix', '.min' );
 
 		wp_localize_script(
 			'visual-portfolio-gutenberg-custom-post-meta',

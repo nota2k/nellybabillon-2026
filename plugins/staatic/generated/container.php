@@ -844,7 +844,7 @@ class CachedContainer extends Container
             yield 4 => $this->privates['Staatic\WordPress\Module\RegisterSchedules'] = $this->privates['Staatic\WordPress\Module\RegisterSchedules'] ?? new RegisterSchedules();
             yield 5 => $this->privates['Staatic\WordPress\Module\RegisterSettings'] ?? $this->getRegisterSettingsService();
             yield 6 => $this->privates['Staatic\WordPress\Module\Admin\RegisterAssets'] = $this->privates['Staatic\WordPress\Module\Admin\RegisterAssets'] ?? new RegisterAssets(
-                '1.12.0'
+                '1.12.1'
             );
             yield 7 => $this->privates['Staatic\WordPress\Module\Admin\RegisterNavigation'] ?? $this->getRegisterNavigationService();
             yield 8 => $this->privates['Staatic\WordPress\Module\Admin\ExtendSiteHealth'] ?? $this->getExtendSiteHealthService();
@@ -1802,7 +1802,7 @@ class CachedContainer extends Container
     {
         return $this->privates['Staatic\WordPress\Migrations\MigrationCoordinatorFactory'] = new MigrationCoordinatorFactory(
             $this->privates['wpdb'] ?? $this->getWpdbService(),
-            '1.12.0'
+            '1.12.1'
         );
     }
 
@@ -3451,7 +3451,7 @@ class CachedContainer extends Container
     protected function getDefaultParameters(): array
     {
         return [
-            'staatic.version' => '1.12.0'
+            'staatic.version' => '1.12.1'
         ];
     }
 }

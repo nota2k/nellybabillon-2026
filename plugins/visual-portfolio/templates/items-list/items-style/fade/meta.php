@@ -20,6 +20,9 @@ $inline_meta = $opts['show_author'] && $args['author'] ||
 	$opts['show_views_count'] && $args['views_count'] ||
 	$opts['show_reading_time'] && $args['reading_time'];
 
+// Allow extensions (e.g. Pro) to enable inline meta.
+$inline_meta = apply_filters( 'vpf_each_item_inline_meta_enabled', $inline_meta, $args, $opts );
+
 $show_meta = $inline_meta ||
 	$opts['show_icon'] ||
 	$opts['show_title'] && $args['title'] ||
@@ -36,12 +39,13 @@ $templates_data = array(
 
 $link_data = array_merge(
 	array(
-		'href'     => $args['url'],
-		'target'   => $args['url_target'],
-		'rel'      => $args['url_rel'],
-		'fallback' => 'span',
-		'class'    => 'vp-portfolio__item-meta',
-		'tabindex' => '-1',
+		'href'       => $args['url'],
+		'target'     => $args['url_target'],
+		'rel'        => $args['url_rel'],
+		'aria_label' => $args['aria_label'] ?? '',
+		'fallback'   => 'span',
+		'class'      => 'vp-portfolio__item-meta',
+		'tabindex'   => '-1',
 	),
 	$templates_data
 );

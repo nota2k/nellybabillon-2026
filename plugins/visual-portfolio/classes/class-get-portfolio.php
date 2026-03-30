@@ -340,21 +340,34 @@ class Visual_Portfolio_Get {
 		$is_images  = 'images' === $options['content_source'];
 		$is_social  = 'social-stream' === $options['content_source'];
 
-		if ( $is_images || $is_social ) {
-			$query_opts = self::get_query_params( $options, false, $options['id'] );
+		// Get query params.
+		$query_opts = self::get_query_params( $options, false, $options['id'] );
 
+		/**
+		 * Filter to provide a custom query result object for non-standard content sources.
+		 * Return a query-like object with have_posts(), the_post(), reset_postdata() methods
+		 * and max_num_pages property, or false to use default WP_Query.
+		 *
+		 * @param bool|object $custom_query Custom query object or false.
+		 * @param array       $query_opts   Query options.
+		 * @param array       $options      Portfolio options.
+		 */
+		$custom_query = apply_filters( 'vpf_custom_query_result', false, $query_opts, $options );
+
+		// This hack exists because wp_reset_postdata() does not work in some situations.
+		$old_post = isset( $GLOBALS['post'] ) ? $GLOBALS['post'] : null;
+
+		if ( $is_images || $is_social ) {
 			if ( isset( $query_opts['max_num_pages'] ) ) {
 				$max_pages = (int) ( $query_opts['max_num_pages'] < $start_page ? $start_page : $query_opts['max_num_pages'] );
 			} else {
 				$max_pages = $start_page;
 			}
+		} elseif ( $custom_query ) {
+			// Use custom query object provided by extensions.
+			$portfolio_query = $custom_query;
+			$max_pages       = (int) ( $portfolio_query->max_num_pages < $start_page ? $start_page : $portfolio_query->max_num_pages );
 		} else {
-			// Get query params.
-			$query_opts = self::get_query_params( $options, false, $options['id'] );
-
-			// stupid hack as wp_reset_postdata() function is not working for some reason...
-			$old_post = $GLOBALS['post'];
-
 			// get Post List.
 			$portfolio_query = new WP_Query( $query_opts );
 
@@ -547,7 +560,9 @@ class Visual_Portfolio_Get {
 		$each_item_args = array(
 			'uid'                => '',
 			'post_id'            => '',
+			'post_type'          => '',
 			'url'                => '',
+			'aria_label'         => '',
 			'title'              => '',
 			'excerpt'            => '',
 			'content'            => '',
@@ -576,7 +591,22 @@ class Visual_Portfolio_Get {
 
 		$items = array();
 
-		if ( ( $is_images || $is_social ) &&
+		/**
+		 * Filter to provide custom items array for non-standard content sources.
+		 * Return an array of items or false to use default processing.
+		 * Each item should follow the $each_item_args structure.
+		 *
+		 * @param bool|array $custom_items   Custom items array or false.
+		 * @param array      $each_item_args Default item args template.
+		 * @param array      $query_opts     Query options.
+		 * @param array      $options        Portfolio options.
+		 */
+		$custom_items = apply_filters( 'vpf_custom_items', false, $each_item_args, $query_opts, $options );
+
+		if ( is_array( $custom_items ) && ! empty( $custom_items ) ) {
+			// Use custom items provided by extensions.
+			$items = $custom_items;
+		} elseif ( ( $is_images || $is_social ) &&
 			isset( $query_opts['images'] ) &&
 			is_array( $query_opts['images'] ) &&
 			! empty( $query_opts['images'] ) ) {
@@ -652,7 +682,8 @@ class Visual_Portfolio_Get {
 			while ( $portfolio_query->have_posts() ) {
 				$portfolio_query->the_post();
 
-				$the_post = get_post();
+				$the_post  = get_post();
+				$post_type = get_post_type();
 
 				self::$used_posts[] = get_the_ID();
 
@@ -701,13 +732,14 @@ class Visual_Portfolio_Get {
 					array(
 						'uid'            => hash( 'crc32b', 'post-' . get_the_ID() ),
 						'post_id'        => get_the_ID(),
+						'post_type'      => $post_type,
 						'url'            => get_permalink(),
 						'title'          => get_the_title(),
 						'content'        => get_the_content(),
 						'format'         => get_post_format() ? get_post_format() : 'standard',
 						'published_time' => get_the_date( 'Y-m-d H:i:s', $the_post ),
 						'filter'         => implode( ',', $filter_values ),
-						'image_id'       => 'attachment' === get_post_type() ? get_the_ID() : get_post_thumbnail_id( get_the_ID() ),
+						'image_id'       => 'attachment' === $post_type ? get_the_ID() : get_post_thumbnail_id( get_the_ID() ),
 						'focal_point'    => Visual_Portfolio_Custom_Post_Meta::get_featured_image_focal_point( get_the_ID() ),
 						'categories'     => $categories,
 						'comments_count' => get_comments_number( get_the_ID() ),
@@ -750,7 +782,7 @@ class Visual_Portfolio_Get {
 			// Sometimes, when we use WPBakery Page Builder, without this reset output is wrong.
 			wp_reset_postdata();
 
-			// stupid hack as wp_reset_postdata() function is not working in some situations...
+			// This hack exists because wp_reset_postdata() does not work in some situations.
             // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 			$GLOBALS['post'] = $old_post;
 		}
@@ -1185,12 +1217,15 @@ class Visual_Portfolio_Get {
 	/**
 	 * Sort associative array by custom field.
 	 *
-	 * @param array  $array - Sortable array.
+	 * @param array  $data - Sortable array.
 	 * @param string $field - Array field by which sorting will take place.
 	 * @param string $order - Sorting order (asc and desc).
 	 * @return array
 	 */
-	public static function sort_array_by_field( $array, $field, $order = 'desc' ) {
+	public static function sort_array_by_field( $data, $field, $order = 'desc' ) {
+		if ( ! is_array( $data ) ) {
+			return array();
+		}
 		$array_with_empty_fields     = array();
 		$array_with_not_empty_fields = array();
 
@@ -1199,7 +1234,7 @@ class Visual_Portfolio_Get {
 		 * This is only necessary when sorting in descending order.
 		 */
 		if ( 'desc' === $order ) {
-			foreach ( $array as $key => &$element ) {
+			foreach ( $data as $key => &$element ) {
 				$element['__VP_SORT_ID__'] = $key;
 			}
 		}
@@ -1212,7 +1247,7 @@ class Visual_Portfolio_Get {
 		 * Prior to PHP 8.0.0, their relative order in the sorted array was undefined.
 		 */
 		usort(
-			$array,
+			$data,
 			function ( $a, $b ) use ( $field, $order ) {
 				// Primary comparison by field values.
 				if ( isset( $a[ $field ] ) && isset( $b[ $field ] ) ) {
@@ -1234,12 +1269,12 @@ class Visual_Portfolio_Get {
 
 		// Clearing the array of service keys.
 		if ( 'desc' === $order ) {
-			foreach ( $array as $key => &$element ) {
+			foreach ( $data as $key => &$element ) {
 				unset( $element['__VP_SORT_ID__'] );
 			}
 		}
 
-		foreach ( $array as $item ) {
+		foreach ( $data as $item ) {
 			if ( empty( $item[ $field ] ) ) {
 				$array_with_empty_fields[] = $item;
 			} else {
@@ -1247,9 +1282,9 @@ class Visual_Portfolio_Get {
 			}
 		}
 
-		$array = array_merge( $array_with_not_empty_fields, $array_with_empty_fields );
+		$data = array_merge( $array_with_not_empty_fields, $array_with_empty_fields );
 
-		return $array;
+		return $data;
 	}
 
 	/**
@@ -1267,10 +1302,10 @@ class Visual_Portfolio_Get {
 		$is_images  = 'images' === $options['content_source'];
 
 		$paged = 0;
-		if ( ( isset( $options['pagination'] ) && $options['pagination'] ) || $is_images ) {
+		if ( isset( $options['pagination'] ) && $options['pagination'] ) {
 			$paged = self::get_current_page_number();
 		}
-		$count = intval( $options['items_count'] );
+		$count = isset( $options['items_count'] ) ? intval( $options['items_count'] ) : 6;
 
 		if ( $is_images ) {
 			$query_opts['images'] = array();
@@ -1571,6 +1606,9 @@ class Visual_Portfolio_Get {
 					if ( ! empty( $options['posts_ids'] ) ) {
 						$query_opts['post__in'] = $options['posts_ids'];
 					}
+
+					// Ignore sticky posts by default for manual selection.
+					$query_opts['ignore_sticky_posts'] = true;
 				} elseif ( 'custom_query' === $options['posts_source'] ) { // Custom Query.
 					$query_opts['post_type'] = 'any';
 
@@ -1779,7 +1817,20 @@ class Visual_Portfolio_Get {
 		// Get active item.
 		$active_item = self::get_filter_active_item( $query_opts );
 
-		if ( $is_images || $is_social ) {
+		/**
+		 * Filter to provide custom filter terms for non-standard content sources.
+		 * Return array with 'terms' and 'there_is_active' keys, or false for default.
+		 *
+		 * @param bool|array $custom_terms Custom terms data or false.
+		 * @param array      $query_opts   Query options.
+		 * @param mixed      $active_item  Currently active filter item.
+		 * @param array      $vp_options   Portfolio options.
+		 */
+		$custom_filter_terms = apply_filters( 'vpf_custom_filter_terms', false, $query_opts, $active_item, $vp_options );
+
+		if ( is_array( $custom_filter_terms ) ) {
+			$term_items = $custom_filter_terms;
+		} elseif ( $is_images || $is_social ) {
 			$term_items = self::get_images_terms( $query_opts, $active_item );
 		} else {
 			$portfolio_query = new WP_Query( $query_opts );
@@ -1898,12 +1949,15 @@ class Visual_Portfolio_Get {
 		$term_taxonomies = array();
 		$terms           = array();
 		$there_is_active = false;
+		$term_counts     = array(); // Track actual counts from query results.
 
-		// stupid hack as wp_reset_postdata() function is not working for me...
-		$old_post = $GLOBALS['post'];
+		// This hack exists because wp_reset_postdata() does not work in some situations.
+		$old_post = isset( $GLOBALS['post'] ) ? $GLOBALS['post'] : null;
+
 		while ( $portfolio_query->have_posts() ) {
 			$portfolio_query->the_post();
-			$all_taxonomies = get_object_taxonomies( get_post() );
+			$current_post_id = get_the_ID();
+			$all_taxonomies  = get_object_taxonomies( get_post() );
 
 			foreach ( $all_taxonomies as $cat ) {
 				// allow only specific taxonomies for filter.
@@ -1924,6 +1978,14 @@ class Visual_Portfolio_Get {
 					}
 					if ( ! in_array( $cat_item->taxonomy, $term_taxonomies, true ) ) {
 						$term_taxonomies[] = $cat_item->taxonomy;
+					}
+					// Count posts for this term based on actual query results.
+					// Use post ID to avoid double-counting the same post for the same term.
+					if ( ! isset( $term_counts[ $cat_item->term_id ] ) ) {
+						$term_counts[ $cat_item->term_id ] = array();
+					}
+					if ( ! in_array( $current_post_id, $term_counts[ $cat_item->term_id ], true ) ) {
+						$term_counts[ $cat_item->term_id ][] = $current_post_id;
 					}
 				}
 			}
@@ -1965,7 +2027,7 @@ class Visual_Portfolio_Get {
 						'filter'      => $term->slug,
 						'label'       => $term->name,
 						'description' => $term->description,
-						'count'       => $term->count,
+						'count'       => isset( $term_counts[ $term->term_id ] ) ? count( $term_counts[ $term->term_id ] ) : 0,
 						'taxonomy'    => $term->taxonomy,
 						'id'          => $term->term_id,
 						'parent'      => $term->parent,
@@ -2172,6 +2234,96 @@ class Visual_Portfolio_Get {
 	}
 
 	/**
+	 * Get item kind label for aria-label generation.
+	 *
+	 * @param array $args - item args.
+	 *
+	 * @return string
+	 */
+	private static function get_item_kind_label( $args ) {
+		$format        = $args['format'] ?? '';
+		$format_labels = array(
+			'video'   => esc_html__( 'video', 'visual-portfolio' ),
+			'audio'   => esc_html__( 'audio', 'visual-portfolio' ),
+			'gallery' => esc_html__( 'gallery', 'visual-portfolio' ),
+		);
+
+		if ( isset( $format_labels[ $format ] ) ) {
+			return $format_labels[ $format ];
+		}
+
+		$post_type = $args['post_type'] ?? '';
+
+		if ( '' === $post_type && ! empty( $args['post_id'] ) ) {
+			$post_type = get_post_type( intval( $args['post_id'] ) );
+		}
+
+		if ( $post_type ) {
+			$post_type_labels = array(
+				'post'    => esc_html__( 'Post', 'visual-portfolio' ),
+				'page'    => esc_html__( 'Page', 'visual-portfolio' ),
+				'product' => esc_html__( 'Product', 'visual-portfolio' ),
+				'shop'    => esc_html__( 'Shop', 'visual-portfolio' ),
+				'project' => esc_html__( 'Project', 'visual-portfolio' ),
+				'work'    => esc_html__( 'Work', 'visual-portfolio' ),
+			);
+
+			if ( isset( $post_type_labels[ $post_type ] ) ) {
+				return $post_type_labels[ $post_type ];
+			}
+
+			$post_type_fallback = ucwords( str_replace( array( '-', '_' ), ' ', $post_type ) );
+			$post_type_fallback = wp_strip_all_tags( $post_type_fallback );
+
+			if ( '' !== trim( $post_type_fallback ) ) {
+				return $post_type_fallback;
+			}
+		}
+
+		$content_source        = $args['vp_opts']['content_source'] ?? '';
+		$content_source_labels = array(
+			'images'        => esc_html__( 'image', 'visual-portfolio' ),
+			'social-stream' => esc_html__( 'social post', 'visual-portfolio' ),
+		);
+
+		if ( isset( $content_source_labels[ $content_source ] ) ) {
+			return $content_source_labels[ $content_source ];
+		}
+
+		return esc_html__( 'item', 'visual-portfolio' );
+	}
+
+	/**
+	 * Get item aria-label.
+	 *
+	 * @param array $args - item args.
+	 *
+	 * @return string
+	 */
+	private static function get_item_aria_label( $args ) {
+		$aria_label = wp_strip_all_tags( $args['aria_label'] ?? '' );
+
+		if ( '' === trim( $aria_label ) ) {
+			$aria_label = wp_strip_all_tags( $args['title'] ?? '' );
+		}
+
+		if ( '' !== trim( $aria_label ) ) {
+			return $aria_label;
+		}
+
+		// translators: %s - item type label such as image, post type name, video, etc.
+		$aria_label = sprintf( esc_html__( 'Open %s', 'visual-portfolio' ), self::get_item_kind_label( $args ) );
+
+		/**
+		 * Filters the generated aria-label for each item link.
+		 *
+		 * @param string $aria_label generated aria-label.
+		 * @param array  $args       item args.
+		 */
+		return apply_filters( 'vpf_item_aria_label', $aria_label, $args );
+	}
+
+	/**
 	 * Print each item
 	 *
 	 * @param array $args current item data.
@@ -2266,6 +2418,8 @@ class Visual_Portfolio_Get {
 				break;
 		}
 
+		$args['aria_label'] = self::get_item_aria_label( $args );
+
 		// No Image.
 		if ( ! $args['image'] && $args['no_image'] ) {
 			$args['image'] = Visual_Portfolio_Images::get_attachment_image( $args['no_image'], $args['img_size'], false, '' );
@@ -2299,7 +2453,7 @@ class Visual_Portfolio_Get {
 			'data-vp-filter' => $args['filter'],
 		);
 
-		if ( $args['focal_point'] && ! empty( $args['focal_point'] ) ) {
+		if ( isset( $args['focal_point'] ) && $args['focal_point'] && ! empty( $args['focal_point'] ) ) {
 			$attrs['style'] = '--vp-images__object-position: ' . esc_attr( 100 * floatval( $args['focal_point']['x'] ) ) . '% ' . esc_attr( 100 * floatval( $args['focal_point']['y'] ) ) . '%;';
 		}
 
@@ -2389,6 +2543,22 @@ class Visual_Portfolio_Get {
 				$img_meta    = wp_get_attachment_image_src( $args['image_id'], $args['img_size_popup'] );
 				$img_md_meta = wp_get_attachment_image_src( $args['image_id'], $args['img_size_md_popup'] );
 				$img_sm_meta = wp_get_attachment_image_src( $args['image_id'], $args['img_size_sm_popup'] );
+
+				if ( ! $img_meta ) {
+					$img_meta = array(
+						wp_get_attachment_url( $args['image_id'] ),
+						0,
+						0,
+					);
+				}
+
+				if ( ! $img_md_meta ) {
+					$img_md_meta = $img_meta;
+				}
+
+				if ( ! $img_sm_meta ) {
+					$img_sm_meta = $img_meta;
+				}
 
 				$popup_image = apply_filters(
 					'vpf_popup_image_data',

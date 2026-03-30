@@ -1,6 +1,6 @@
 @import "../../variables";
 
-.vpf-component-gallery-control {
+.vpf-component-gallery-control  {
 	.vpf-component-gallery-control-items {
 		position: relative;
 		display: grid;
@@ -273,44 +273,157 @@
 	}
 }
 
+.vpf-component-gallery-control-modal {
+	width: min(828px, calc(100vw - 32px));
+	max-width: 828px;
+
+	.components-modal__header-heading {
+		width: 100%;
+	}
+}
+
+.vpf-component-gallery-control-modal-title {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+}
+
+.vpf-component-gallery-control-modal-title-nav {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	margin-left: auto;
+}
+
+.vpf-component-gallery-control-modal-title-nav-button.components-button {
+	padding: 0;
+	height: 26px;
+	width: 26px;
+	margin: -4px;
+
+	&:disabled {
+		opacity: 0.45;
+	}
+
+	svg {
+		transform: rotate(-90deg);
+		width: 100%;
+		height: 100%;
+	}
+	+ .vpf-component-gallery-control-modal-title-nav-button.components-button svg {
+		transform: rotate(90deg);
+	}
+}
+
 .vpf-component-gallery-control-item-modal {
-	max-width: 540px;
+	width: 100%;
 
 	.vpf-component-gallery-control-item-modal-image-info {
-		margin-bottom: 30px;
+		:where(img, video, iframe) {
+			width: 100%;
+		}
+	}
 
-		img {
-			max-height: 150px;
+	.vpf-component-gallery-control-collapsible-section {
+		> .vpf-component-gallery-control-collapsible-section-toggle {
+			display: flex;
+			align-items: center;
+			height: 14px;
+			padding: 0;
+			font-weight: 450;
+			color: #7d7d7d;
+			text-decoration: none;
+			background: transparent;
+
+			.components-panel__arrow {
+				width: 20px;
+				height: 20px;
+				margin-left: 2px;
+				transition: transform 0.15s ease;
+			}
+
+			&[aria-expanded='true'] {
+				.components-panel__arrow {
+					transform: rotate(180deg);
+				}
+			}
+		}
+
+		> .vpf-component-gallery-control-collapsible-section-content {
+			margin-top: 16px;
 		}
 	}
 
 	.vpf-component-gallery-control-item-modal-image-additional-info {
-		margin-top: 30px;
+		.vpf-component-gallery-control-collapsible-section-content {
+			word-wrap: break-word;
+		}
+	}
 
-		> .components-button {
-			display: flex;
-			align-items: center;
-			justify-content: center;
+	.vpf-component-gallery-control-item-modal-image-additional-info-focal-point {
+		margin-bottom: 16px;
+		margin-top: -6px;
+
+		.components-panel__row {
+			gap: 16px;
+		}
+
+		.components-input-control {
+			flex: 1;
+		}
+	}
+
+	.vpf-component-gallery-control-item-modal-fields {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr);
+		gap: 0 20px;
+		flex: 1;
+		min-width: 0;
+	}
+
+	.vpf-component-gallery-control-item-modal-fields-left {
+		margin-top: 16px;
+	}
+
+	.vpf-component-gallery-control-item-modal-state-tabs {
+		margin-bottom: 16px;
+
+		.components-toggle-group-control {
 			width: 100%;
-			padding: 10px;
-			color: #7d7d7d;
-			text-decoration: none;
-			background-color: #ebebeb;
-
-			svg {
-				width: 13px;
-				margin-left: 10px;
-			}
 		}
+	}
 
-		> div {
-			margin-top: 20px;
-		}
+	.vpf-component-gallery-control-item-modal-field {
+		min-width: 0;
+	}
 
-		.vpf-component-gallery-control-item-modal-image-additional-info-copied {
-			margin-left: 10px;
-			color: #15b11d;
-		}
+	.vpf-component-gallery-control-item-modal-field-full {
+		grid-column: 1 / -1;
+	}
+
+	// Make URL control compact when next control is also compact.
+	.vpf-control-wrap-name-images-url:has(+ .vpf-component-gallery-control-item-modal-field-compact) {
+		grid-column: 1;
+	}
+
+	.vpf-component-gallery-control-item-modal-heading {
+		margin-bottom: 14px;
+	}
+
+	.vpf-component-gallery-control-item-modal-heading-title {
+		color: #9f9f9f;
+		font-size: 11px;
+		font-weight: 500;
+		line-height: 1.4;
+		margin: 0;
+		text-transform: uppercase;
+	}
+
+	.vpf-component-gallery-control-item-modal-heading-description {
+		color: #9f9f9f;
+		margin: 6px 0 0;
+		font-size: 12px;
+		line-height: 1.5;
 	}
 
 	@media screen and (min-width: 600px) {
@@ -319,22 +432,27 @@
 		align-items: flex-start;
 
 		.vpf-component-gallery-control-item-modal-image-info {
-			position: sticky;
-			top: 30px;
-			flex: 1;
-			width: 230px;
-			margin-bottom: 0;
+			flex: 0 0 233px;
+			width: 233px;
 
 			+ div {
-				width: 280px;
+				flex: 1;
+				width: auto;
 			}
 		}
 
-		.vpf-component-gallery-control-item-modal-image-info-sticky-bottom {
-			position: sticky;
-			top: auto;
-			bottom: 30px;
-			margin-top: auto;
+		.vpf-component-gallery-control-item-modal-fields-left {
+			grid-template-columns: minmax(0, 1fr);
+		}
+	}
+
+	@media screen and (min-width: 782px) {
+		.vpf-component-gallery-control-item-modal-fields {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+
+		.vpf-component-gallery-control-item-modal-field-compact {
+			grid-column: span 1;
 		}
 	}
 }

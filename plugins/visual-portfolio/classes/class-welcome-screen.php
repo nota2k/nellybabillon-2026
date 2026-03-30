@@ -14,6 +14,147 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Visual_Portfolio_Welcome_Screen {
 	/**
+	 * Get context specific copy for the welcome screen.
+	 *
+	 * @param bool $is_pro_context Whether Pro is active.
+	 *
+	 * @return array
+	 */
+	private function get_context_copy( $is_pro_context ) {
+		if ( $is_pro_context ) {
+			return array(
+				'head_label'               => esc_html__( 'Visual Portfolio Pro active', 'visual-portfolio' ),
+				'head_title'               => esc_html__( 'Your premium portfolio features are already unlocked.', 'visual-portfolio' ),
+				'head_subtitle'            => esc_html__( 'Use the same visual workflow for galleries, post grids, and portfolio layouts, now with the additional Pro features already available on this site.', 'visual-portfolio' ),
+				'feature_section_title'    => esc_html__( 'Core workflow included in Pro', 'visual-portfolio' ),
+				'feature_section_subtitle' => esc_html__( 'These are the essential Visual Portfolio building blocks you can use across both free and Pro setups.', 'visual-portfolio' ),
+				'pro_section_title'        => esc_html__( 'Advantages already included with Pro', 'visual-portfolio' ),
+				'pro_section_subtitle'     => esc_html__( 'These premium capabilities are already enabled because you are using Visual Portfolio Pro.', 'visual-portfolio' ),
+			);
+		}
+
+		return array(
+			'head_label'               => esc_html__( 'Free version active', 'visual-portfolio' ),
+			'head_title'               => esc_html__( 'Build a modern portfolio experience in WordPress.', 'visual-portfolio' ),
+			'head_subtitle'            => esc_html__( 'Create galleries, post grids, and polished portfolio layouts with a workflow that stays visual from setup to launch.', 'visual-portfolio' ),
+			'feature_section_title'    => esc_html__( 'Everything you can build right away', 'visual-portfolio' ),
+			'feature_section_subtitle' => esc_html__( 'Start with the core Visual Portfolio workflow and expand later only if your projects need more advanced features.', 'visual-portfolio' ),
+			'pro_section_title'        => esc_html__( 'Need more advanced portfolio features?', 'visual-portfolio' ),
+			'pro_section_subtitle'     => esc_html__( 'Pro expands the same workflow with features aimed at client work, content protection, social sources, and deeper customization.', 'visual-portfolio' ),
+		);
+	}
+
+	/**
+	 * Get feature cards for the welcome screen.
+	 *
+	 * @return array
+	 */
+	private function get_feature_cards() {
+		return array(
+			array(
+				'title'       => esc_html__( 'Visual gallery builder', 'visual-portfolio' ),
+				'description' => esc_html__( 'Create galleries, portfolios, and post grids visually in Gutenberg with live preview and flexible controls.', 'visual-portfolio' ),
+			),
+			array(
+				'title'       => esc_html__( 'Flexible layouts and styles', 'visual-portfolio' ),
+				'description' => esc_html__( 'Mix grid, masonry, justified, slider, and tiles layouts with polished hover styles for different creative workflows.', 'visual-portfolio' ),
+			),
+			array(
+				'title'       => esc_html__( 'Dynamic query builder', 'visual-portfolio' ),
+				'description' => esc_html__( 'Display portfolio items, blog posts, or any post type and filter them by taxonomy, author, date, and more.', 'visual-portfolio' ),
+			),
+			array(
+				'title'       => esc_html__( 'Fast by design', 'visual-portfolio' ),
+				'description' => esc_html__( 'Assets are loaded only where needed, so galleries stay lightweight and feel native on the front end.', 'visual-portfolio' ),
+			),
+			array(
+				'title'       => esc_html__( 'Advanced media experience', 'visual-portfolio' ),
+				'description' => esc_html__( 'Present images, videos, and audio in one portfolio with responsive lightbox behavior and touch-friendly navigation.', 'visual-portfolio' ),
+			),
+			array(
+				'title'       => esc_html__( 'Filtering, sorting, and pagination', 'visual-portfolio' ),
+				'description' => esc_html__( 'Help visitors explore larger collections with category filters, sort controls, load more, and infinite scrolling.', 'visual-portfolio' ),
+			),
+		);
+	}
+
+	/**
+	 * Get Pro feature highlights.
+	 *
+	 * @return array
+	 */
+	private function get_pro_highlights() {
+		return array(
+			array(
+				'title'       => esc_html__( 'Video items', 'visual-portfolio' ),
+				'description' => esc_html__( 'Add video items to image galleries and post grids, then autoplay them on open or trigger playback on hover.', 'visual-portfolio' ),
+			),
+			array(
+				'title'       => esc_html__( 'Albums and gallery format', 'visual-portfolio' ),
+				'description' => esc_html__( 'Build nested galleries and output album-style content across image galleries, posts, and taxonomy grids.', 'visual-portfolio' ),
+			),
+			array(
+				'title'       => esc_html__( 'Taxonomy grids', 'visual-portfolio' ),
+				'description' => esc_html__( 'Use taxonomy terms as a dedicated gallery source and turn categories, tags, or custom taxonomies into visual grids.', 'visual-portfolio' ),
+			),
+			array(
+				'title'       => esc_html__( 'Proofing workflows', 'visual-portfolio' ),
+				'description' => esc_html__( 'Collaborate with clients on image selections and benefit from self-healing proofing permalinks.', 'visual-portfolio' ),
+			),
+			array(
+				'title'       => esc_html__( 'Content protection', 'visual-portfolio' ),
+				'description' => esc_html__( 'Protect galleries with watermarks, age gate rules, and right click protection.', 'visual-portfolio' ),
+			),
+			array(
+				'title'       => esc_html__( 'Advanced popups', 'visual-portfolio' ),
+				'description' => esc_html__( 'Use deep linking and open posts or pages in popups alongside your media galleries.', 'visual-portfolio' ),
+			),
+			array(
+				'title'       => esc_html__( 'Social sources and query controls', 'visual-portfolio' ),
+				'description' => esc_html__( 'Extend projects with social feeds, advanced query controls, and AJAX-driven performance improvements.', 'visual-portfolio' ),
+			),
+			array(
+				'title'       => esc_html__( 'Branding and effects', 'visual-portfolio' ),
+				'description' => esc_html__( 'Unlock hover images, extra visual effects, white label options, and developer-friendly extensibility.', 'visual-portfolio' ),
+			),
+			array(
+				'title'       => esc_html__( 'And more...', 'visual-portfolio' ),
+				'description' => esc_html__( 'Get access to many more Pro features for layout control, client work, integrations, performance, and advanced customization.', 'visual-portfolio' ),
+			),
+		);
+	}
+
+	/**
+	 * Render Pro highlights section.
+	 *
+	 * @param array  $copy             Context specific copy.
+	 * @param array  $pro_highlights   Pro highlight list.
+	 * @param string $cta_link         Optional CTA link.
+	 * @param string $cta_label        Optional CTA label.
+	 *
+	 * @return void
+	 */
+	private function render_pro_highlights_section( $copy, $pro_highlights, $cta_link = '', $cta_label = '' ) {
+		?>
+		<div class="vpf-welcome-foot-pro-info">
+			<h2><?php echo esc_html( $copy['pro_section_title'] ); ?></h2>
+			<p class="vpf-welcome-foot-description"><?php echo esc_html( $copy['pro_section_subtitle'] ); ?></p>
+			<ul>
+				<?php foreach ( $pro_highlights as $pro_highlight ) { ?>
+					<li>
+						<strong><?php echo esc_html( $pro_highlight['title'] ); ?></strong>
+						<p><?php echo esc_html( $pro_highlight['description'] ); ?></p>
+					</li>
+				<?php } ?>
+			</ul>
+			<?php if ( $cta_link && $cta_label ) { ?>
+				<a target="_blank" rel="noopener noreferrer" href="<?php echo esc_url( $cta_link ); ?>"><?php echo esc_html( $cta_label ); ?></a>
+			<?php } ?>
+		</div>
+		<?php
+	}
+
+	/**
 	 * Visual_Portfolio_Welcome_Screen constructor.
 	 */
 	public function __construct() {
@@ -69,6 +210,11 @@ class Visual_Portfolio_Welcome_Screen {
 	 * Add welcome screen page content.
 	 */
 	public function welcome_screen_page_content() {
+		$is_pro_context = visual_portfolio()->is_pro();
+		$feature_cards  = $this->get_feature_cards();
+		$pro_highlights = $this->get_pro_highlights();
+		$context_copy   = $this->get_context_copy( $is_pro_context );
+
 		if ( function_exists( 'print_emoji_detection_script' ) ) {
 			print_emoji_detection_script();
 		}
@@ -101,103 +247,52 @@ class Visual_Portfolio_Welcome_Screen {
 			),
 		);
 		?>
-		<div class="vpf-welcome-screen">
+		<div class="vpf-welcome-screen <?php echo $is_pro_context ? 'is-pro-context' : 'is-free-context'; ?>">
 			<div class="vpf-welcome-head">
-				<img class="vpf-welcome-head-background" src="<?php echo esc_url( visual_portfolio()->plugin_url . 'assets/admin/images/admin-welcome-background.jpg' ); ?>" alt="<?php echo esc_attr__( 'Visual Portfolio', 'visual-portfolio' ); ?>">
-				<h2 class="vpf-welcome-head-logo">
-					<i class="dashicons-visual-portfolio"></i>
-					<?php echo esc_html__( 'Visual Portfolio', 'visual-portfolio' ); ?>
-				</h2>
-				<div class="vpf-welcome-subtitle"><?php echo esc_html__( 'Thank you for choosing Visual Portfolio - The Modern Gallery, Posts Grid and Portfolio Plugin for WordPress.', 'visual-portfolio' ); ?></div>
+				<div class="vpf-welcome-head-inner">
+					<div class="vpf-welcome-head-label">
+						<?php echo esc_html( $context_copy['head_label'] ); ?>
+					</div>
+					<h2 class="vpf-welcome-head-title"><?php echo esc_html( $context_copy['head_title'] ); ?></h2>
+					<div class="vpf-welcome-subtitle">
+						<?php echo esc_html( $context_copy['head_subtitle'] ); ?>
+					</div>
 
-				<div class="vpf-welcome-head-pro-info">
-					<div><strong><?php echo esc_html__( 'You\'re using free Visual Portfolio plugin. Enjoy! 🙂', 'visual-portfolio' ); ?></strong></div>
-					<div>
-						<?php
-						// translators: %s - pro link.
-						echo sprintf( esc_html__( 'Want to get more power with Pro? Visit %s', 'visual-portfolio' ), '<a target="_blank" rel="noopener noreferrer" href="' . esc_url( $go_pro_links['head'] ) . '">visualportfolio.com/pricing</a>' );
-						?>
+					<div class="vpf-welcome-content-buttons">
+						<?php if ( ! $is_pro_context ) { ?>
+							<a class="is-primary" target="_blank" rel="noopener noreferrer" href="<?php echo esc_url( $go_pro_links['more_features'] ); ?>"><?php echo esc_html__( 'Compare Free vs Pro', 'visual-portfolio' ); ?></a>
+						<?php } ?>
+						<a class="<?php echo $is_pro_context ? 'is-primary' : 'is-secondary'; ?>" target="_blank" rel="noopener noreferrer" href="<?php echo esc_url( $go_pro_links['docs'] ); ?>"><?php echo esc_html__( 'Documentation', 'visual-portfolio' ); ?></a>
 					</div>
 				</div>
 			</div>
 
 			<div class="vpf-welcome-content">
-				<h2 class="vpf-welcome-content-title"><?php echo esc_html__( 'Main Features & Solutions', 'visual-portfolio' ); ?></h2>
-
+				<h2><?php echo esc_html( $context_copy['feature_section_title'] ); ?></h2>
+				<p class="vpf-welcome-foot-description"><?php echo esc_html( $context_copy['feature_section_subtitle'] ); ?></p>
 				<ul class="vpf-welcome-content-features">
-					<li>
-						<span>🏆</span>
-						<strong><?php echo esc_html__( 'Visual Gallery Builder', 'visual-portfolio' ); ?></strong>
-						<p><?php echo esc_html__( 'Build your portfolio and gallery blocks with no coding knowledge. Thanks to Gutenberg page builder you are able to create and customize galleries visually.', 'visual-portfolio' ); ?></p>
-					</li>
-					<li>
-						<span>🚀</span>
-						<strong><?php echo esc_html__( 'Optimized to be Fast as Native', 'visual-portfolio' ); ?></strong>
-						<p><?php echo esc_html__( 'Due to the modular code structure, all scripts and styles are loaded only when they are needed for the current page that displays your gallery.', 'visual-portfolio' ); ?></p>
-					</li>
-
-					<li>
-						<span>📱</span>
-						<strong><?php echo esc_html__( 'Layouts', 'visual-portfolio' ); ?></strong>
-						<p><?php echo esc_html__( 'Our gallery plugin shipped with popular layouts such as Masonry and Justified (Flickr).', 'visual-portfolio' ); ?></p>
-					</li>
-					<li>
-						<span>🎨</span>
-						<strong><?php echo esc_html__( 'Visual Effects', 'visual-portfolio' ); ?></strong>
-						<p><?php echo esc_html__( 'Showcase your projects ang gallery images with clean and beautiful visual styles.', 'visual-portfolio' ); ?></p>
-					</li>
-
-					<li>
-						<span>⚙️</span>
-						<strong><?php echo esc_html__( 'Easy to Customize', 'visual-portfolio' ); ?></strong>
-						<p><?php echo esc_html__( 'The gallery block with live preview includes a lot of design settings that are point-and-click, no coding knowledge required.', 'visual-portfolio' ); ?></p>
-					</li>
-					<li>
-						<span>💎</span>
-						<strong><?php echo esc_html__( 'Posts Query Builder', 'visual-portfolio' ); ?></strong>
-						<p><?php echo esc_html__( 'Display posts, portfolios, and any other post types, filter by taxonomies, author, date ranges, and much more options.', 'visual-portfolio' ); ?></p>
-					</li>
-
-					<li>
-						<span>⚡</span>
-						<strong><?php echo esc_html__( 'Powerful Lightbox', 'visual-portfolio' ); ?></strong>
-						<p><?php echo esc_html__( 'Visual Portfolio uses scripts for lightboxes that is high performance, mobile optimized and retina-ready.', 'visual-portfolio' ); ?></p>
-					</li>
-					<li>
-						<span>📹</span>
-						<strong><?php echo esc_html__( 'Video and 🎵 Audio Support', 'visual-portfolio' ); ?></strong>
-						<p><?php echo esc_html__( 'Present not only photos, but also audios and videos within a single gallery.', 'visual-portfolio' ); ?></p>
-					</li>
+					<?php foreach ( $feature_cards as $index => $feature_card ) { ?>
+						<li>
+							<span><?php echo esc_html( str_pad( (string) ( $index + 1 ), 2, '0', STR_PAD_LEFT ) ); ?></span>
+							<strong><?php echo esc_html( $feature_card['title'] ); ?></strong>
+							<p><?php echo esc_html( $feature_card['description'] ); ?></p>
+						</li>
+					<?php } ?>
 				</ul>
-
-				<hr>
-
-				<div class="vpf-welcome-content-buttons">
-					<a target="_blank" rel="noopener noreferrer" href="<?php echo esc_url( $go_pro_links['more_features'] ); ?>"><?php echo esc_html__( 'More Features', 'visual-portfolio' ); ?></a>
-					<a target="_blank" rel="noopener noreferrer" href="<?php echo esc_url( $go_pro_links['docs'] ); ?>"><?php echo esc_html__( 'Documentation', 'visual-portfolio' ); ?></a>
-				</div>
 			</div>
 
-			<div class="vpf-welcome-foot-pro-info">
-				<h2>
-					<?php echo esc_html__( 'Upgrade to Visual Portfolio Pro', 'visual-portfolio' ); ?>
-					<br>
-					<?php echo esc_html__( 'and Get More Power!', 'visual-portfolio' ); ?>
-				</h2>
-				<ul>
-					<li><?php echo esc_html__( 'Social Feeds', 'visual-portfolio' ); ?></li>
-					<li><?php echo esc_html__( 'Stylish Effects', 'visual-portfolio' ); ?></li>
-					<li><?php echo esc_html__( 'Watermarks Protection', 'visual-portfolio' ); ?></li>
-					<li><?php echo esc_html__( 'Age Gate Protection', 'visual-portfolio' ); ?></li>
-					<li><?php echo esc_html__( 'Instagram-like Image Filters', 'visual-portfolio' ); ?></li>
-					<li><?php echo esc_html__( 'Advanced Query Settings', 'visual-portfolio' ); ?></li>
-					<li><?php echo esc_html__( 'Popup for Posts and Pages', 'visual-portfolio' ); ?></li>
-					<li><?php echo esc_html__( 'Popup Deep Linking', 'visual-portfolio' ); ?></li>
-					<li><?php echo esc_html__( 'White Label', 'visual-portfolio' ); ?></li>
-					<li><?php echo esc_html__( 'And much more...', 'visual-portfolio' ); ?></li>
-				</ul>
-				<a target="_blank" rel="noopener noreferrer" href="<?php echo esc_url( $go_pro_links['foot'] ); ?>"><?php echo esc_html__( 'Upgrade to PRO Now', 'visual-portfolio' ); ?></a>
-			</div>
+			<?php
+			if ( ! $is_pro_context ) {
+				$this->render_pro_highlights_section(
+					$context_copy,
+					$pro_highlights,
+					$go_pro_links['head'],
+					esc_html__( 'See Pro details', 'visual-portfolio' )
+				);
+			} else {
+				$this->render_pro_highlights_section( $context_copy, $pro_highlights );
+			}
+			?>
 		</div>
 		<?php
 	}

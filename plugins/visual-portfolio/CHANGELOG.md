@@ -2,6 +2,78 @@
 
 All notable changes to this project will be documented in this file.
 
+= 3.6.0 - Mar 23, 2026 =
+
+* refined image settings in popup in image galleries - better fields and overall ux
+* refined welcome screen
+* improved featured image focal point on posts - setting hidden by default in collapse
+* improve settings page: disable the Save Changes button when no changes are made
+* fixed missing aria-label on overlay/item links with empty `<a>` tags
+* fixed slider gap on RTL sites
+* minor fixes and improvements
+* **Pro:**
+* added support for video items in image gallery and in post grids. Autoplay video on gallery item automatically or on hover <https://www.visualportfolio.com/video-gallery/>
+* added Gallery format and albums (nested gallery) support for image galleries, posts and taxonomy grids <https://www.visualportfolio.com/album-gallery/>
+* added support for displaying Taxonomies as gallery content source <https://www.visualportfolio.com/taxonomies/>
+* improved social feeds fetching queue startup condition: start immediately when a new social integration is added
+* fixed broken preview images in setup wizard skin examples
+* fixed proofing gallery permalink 404 by deferred rewrite self-healing
+* fixed the social feeds start queue trigger. Feeds now begin fetching as soon as the integration is added, and no longer depend on the block being added to the page
+* fixed search feature does not work correctly with paginated pages
+* fixed Social Items and Social Profiles menu items from displaying when no integrations are enabled
+
+= 3.5.2 - Feb 18, 2026 =
+
+* security: fixed local file inclusion via path traversal
+
+= 3.5.1 - Feb 12, 2026 =
+
+* updated supported WP version to 6.9
+* added support for Blocksy settings in our Portfolio CPT
+* minor changes
+
+= 3.5.0 - Feb 6, 2026 =
+
+* improved performance by reducing database queries
+* minor changes
+* **Pro:**
+* !IMPORTANT: Google Photos integration completely removed
+* !IMPORTANT: social integration migrated to custom post type. The system will automatically migrate your old social posts to the new system. This will take time because migration occurs in small portions.
+* added ability to manage downloaded social posts in custom post type and images in Media library
+* improved proofing feature:
+  * added possibility to reset proofing status
+  * added possibility to save selection before submitting
+  * added filter by selected/unselected
+  * added possibility to require minimum and maximum number of images for submission
+  * improve proofing actions bar - added number of selected and total number of images, added Save button, changed select/deselect links to checkbox
+* improved performance in image galleries by removing redundant full option calls
+
+= 3.4.1 - Nov 11, 2025 =
+
+* fixed sticky posts appearing in Manual Selection posts source
+* **Pro:**
+* fixed option Ignore Sticky Posts incorrectly change output for Current Query and Custom Query posts sources
+* fixed option Ignore Sticky Posts appear when Manual Selection posts source selected
+
+= 3.4.0 - Nov 5, 2025 =
+
+* added custom lightbox gallery support using `.vp-lightbox-gallery` class
+* added lightbox event support for third-party galleries. For example, JS events like `initFancybox` and `beforeInitPhotoSwipe` now also fire on non-portfolio galleries
+* added SEO optimizations
+* fixed register_script to use in_footer true by default, which we changed in recent plugin updates and broke some features, for example - iframe preview resizer
+* fixed lazy loading conflict with WordPress Lightbox block
+* fixed pattern context bug and posts query type handling (fixed issue with displaying block when WooCommerce installed)
+* fixed RSS feed generation for portfolio archives
+* fixed controls persistence and rendering in Saved Layouts
+* fixed taxonomy filter counts to use actual query results
+* fixed experimental filter block to work with nested loop blocks
+* skip lazy loading from applying to images with fetchpriority="high" attribute
+* **Pro:**
+* migrated VK to new api domain
+* deprecated Google Photos integration
+* fixed click action for custom image
+* fixed updater api
+
 = 3.3.16 - Jun 26, 2025 =
 
 * started our way to transition to modern blocks. Added new **experimental** blocks:

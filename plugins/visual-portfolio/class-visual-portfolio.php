@@ -2,7 +2,7 @@
 /**
  * Plugin Name:  Visual Portfolio, Posts & Image Gallery
  * Description:  Modern gallery and portfolio plugin with advanced layouts editor. Clean and powerful gallery styles with enormous settings in the Gutenberg block.
- * Version:      3.3.16
+ * Version:      3.6.0
  * Plugin URI:   https://www.visualportfolio.com/?utm_source=wordpress.org&utm_medium=readme&utm_campaign=byline
  * Author:       Visual Portfolio Team
  * Author URI:   https://www.visualportfolio.com/?utm_source=wordpress.org&utm_medium=readme&utm_campaign=byline
@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! defined( 'VISUAL_PORTFOLIO_VERSION' ) ) {
-	define( 'VISUAL_PORTFOLIO_VERSION', '3.3.16' );
+	define( 'VISUAL_PORTFOLIO_VERSION', '3.6.0' );
 }
 
 if ( ! class_exists( 'Visual_Portfolio' ) ) :
@@ -95,6 +95,15 @@ if ( ! class_exists( 'Visual_Portfolio' ) ) :
 		}
 
 		/**
+		 * Check if Pro plugin is active.
+		 *
+		 * @return bool
+		 */
+		public function is_pro() {
+			return defined( 'VISUAL_PORTFOLIO_PRO' ) || function_exists( 'visual_portfolio_pro' );
+		}
+
+		/**
 		 * Init options
 		 */
 		public function init() {
@@ -103,7 +112,7 @@ if ( ! class_exists( 'Visual_Portfolio' ) ) :
 			$this->plugin_url      = plugin_dir_url( __FILE__ );
 
 			// Check for new standalone Pro plugin and for old Pro addon plugin for back compatibility.
-			if ( defined( 'VISUAL_PORTFOLIO_PRO' ) || function_exists( 'visual_portfolio_pro' ) ) {
+			if ( $this->is_pro() ) {
 				$this->pro_plugin_path = plugin_dir_path( WP_PLUGIN_DIR . '/visual-portfolio-pro/class-visual-portfolio-pro.php' );
 				$this->pro_plugin_url  = plugin_dir_url( WP_PLUGIN_DIR . '/visual-portfolio-pro/class-visual-portfolio-pro.php' );
 			}
@@ -129,7 +138,7 @@ if ( ! class_exists( 'Visual_Portfolio' ) ) :
 		 */
 		public function init_hook() {
 			// load textdomain.
-			load_plugin_textdomain( 'visual-portfolio', false, basename( dirname( __FILE__ ) ) . '/languages' );
+			load_plugin_textdomain( 'visual-portfolio', false, basename( __DIR__ ) . '/languages' );
 		}
 
 		/**
@@ -258,6 +267,7 @@ if ( ! class_exists( 'Visual_Portfolio' ) ) :
 			require_once $this->plugin_path . 'classes/3rd/plugins/class-yoast.php';
 			require_once $this->plugin_path . 'classes/3rd/plugins/class-all-in-one-seo.php';
 			require_once $this->plugin_path . 'classes/3rd/themes/class-avada.php';
+			require_once $this->plugin_path . 'classes/3rd/themes/class-blocksy.php';
 			require_once $this->plugin_path . 'classes/3rd/themes/class-enfold.php';
 			require_once $this->plugin_path . 'classes/3rd/themes/class-thrive-architect.php';
 

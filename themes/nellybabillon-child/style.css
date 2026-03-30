@@ -1382,12 +1382,15 @@ article.type-projet header .column {
     justify-content: center;
     height: 100%;
     min-width: 300px;
-    min-height: 500px;
+    min-height: fit-content;
+
     height: 100%;
 }
 
 .column#left {
     align-items: flex-start;
+    position: relative;
+    z-index: 10;
 }
 
 .column#right {
@@ -1398,20 +1401,23 @@ article.type-projet header .column {
 }
 
 @media screen and (min-width: 900px) {
+    article.type-projet header .column {
+        min-height: 500px;
+    }
+
     .column#right {
         display: inherit;
     }
 }
 
 article.type-projet header .post-thumbnail {
-    width: calc(100% - 50px);
-    height: calc(100% - 2em);
+    width: 100%;
+    height: 100%;
     border-radius: 260px 260px 0px 0px;
     overflow: hidden;
-    max-width: calc(350px - 2em);
-    object-position: center;
-    aspect-ratio: 1/1;
     border: 1px solid blue;
+    position: relative;
+    z-index: 0;
 }
 
 article.type-projet header .arc {
@@ -1423,12 +1429,16 @@ article.type-projet header .arc {
     z-index: 2;
     width: 100%;
     aspect-ratio: 1/1;
+    object-position: center;
+
 }
 
 article.type-projet header .post-thumbnail img {
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
+    object-position: center;
+
 }
 
 article.type-projet .split {
@@ -1442,7 +1452,7 @@ article.type-projet header h1 {
     font-family: 'Arnold Boecklin LT';
     font-weight: lighter;
     -webkit-text-stroke: 1px white;
-    font-size: 11vh;
+    font-size: clamp(8vw, 10vh, 3vw);
 }
 
 article.type-projet header p {

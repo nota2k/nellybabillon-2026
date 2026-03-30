@@ -178,6 +178,8 @@ class Visual_Portfolio_Settings {
 				'nonce' => wp_create_nonce( 'vp-ajax-nonce' ),
 			);
 
+			self::$settings_api->admin_enqueue_scripts();
+
 			Visual_Portfolio_Assets::enqueue_script( 'visual-portfolio-archive-page-selector', 'build/assets/admin/js/archive-page-selector', array( 'select2' ) );
 
 			wp_localize_script( 'visual-portfolio-archive-page-selector', 'VPAdminVariables', $data_init );
@@ -677,6 +679,32 @@ class Visual_Portfolio_Settings {
 					),
 				),
 
+				// Albums settings.
+				array(
+					'name'   => 'album_section_title',
+					'label'  => esc_html__( 'Albums', 'visual-portfolio' ),
+					'type'   => 'section_title',
+					'is_pro' => true,
+				),
+				array(
+					'name'    => 'album_isolated_popup',
+					'label'   => esc_html__( 'Isolated Album Popup', 'visual-portfolio' ),
+					'desc'    => esc_html__( 'When enabled, clicking an album opens a popup with only that album\'s images. Navigation to other items is disabled.', 'visual-portfolio' ),
+					'type'    => 'toggle',
+					'default' => 'on',
+					'is_pro'  => true,
+				),
+				array(
+					'name'    => 'album_lazy_load_threshold',
+					'label'   => esc_html__( 'Album Lazy Load Threshold', 'visual-portfolio' ),
+					'desc'    => esc_html__( 'Number of album images to render inline. Additional images are loaded via REST API when the popup opens.', 'visual-portfolio' ),
+					'type'    => 'number',
+					'default' => 20,
+					'min'     => 5,
+					'max'     => 100,
+					'is_pro'  => true,
+				),
+
 				// Quick View settings.
 				array(
 					'name'   => 'popup_quick_view_title',
@@ -811,8 +839,6 @@ class Visual_Portfolio_Settings {
 	 * @return void
 	 */
 	public static function print_settings_page() {
-		self::$settings_api->admin_enqueue_scripts();
-
 		echo '<div class="wrap">';
 		echo '<h2>' . esc_html__( 'Settings', 'visual-portfolio' ) . '</h2>';
 
@@ -861,8 +887,11 @@ class Visual_Portfolio_Settings {
 			'' => esc_html__( '-- Select Page --', 'visual-portfolio' ),
 		);
 		if ( $archive_page ) {
-			$archive_title               = get_post_field( 'post_title', $archive_page );
-			$pages_list[ $archive_page ] = $archive_title;
+			$post = get_post( $archive_page );
+
+			if ( $post instanceof WP_Post ) {
+				$pages_list[ $archive_page ] = $post->post_title;
+			}
 		}
 		return $pages_list;
 	}

@@ -3,8 +3,8 @@ Contributors: ninjateam
 Donate link: https://ninjateam.org/wordpress-media-library-folders/ 
 Tags: wordpress media library folders, wp media folders, media, media folders, file manager
 Requires at least: 3.0
-Tested up to: 6.8
-Stable tag: 6.5.1
+Tested up to: 6.9
+Stable tag: 6.5.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,9 +16,9 @@ Organize thousands of WordPress media files in folders / categories with ease.
 
 Let's organize WordPress media library folders using a drag and drop organizer.
 
-[TEST DRIVE](https://media-folder.ninjateam.org/create/) | [**GO PRO (Lifetime License)**](https://1.envato.market/FileBird-Premium) 💎
+[**TEST DRIVE**](https://media-folder.ninjateam.org/create/) | [**GO PRO (Lifetime License)**](https://1.envato.market/FileBird-Premium) 💎
 
-FileBird enhances your media library with a clean user interface, native icons, smooth drag & drop, dynamic gallery, and advanced sort options. With such a better organization, it becomes super easy to insert images into Gutenberg blocks, find old files, and remove unused images.
+FileBird transforms your WordPress media library with intuitive folder organization, smooth drag & drop, and smart sorting. Locate images faster, easily insert them into Gutenberg blocks, quickly identify and remove unused files.
 
 The free version allows you to create **unlimited main folders** and **subfolders**.
 
@@ -72,7 +72,7 @@ Go advanced with 2 ways to sort folders and 10 ways to sort files. This is a gre
 Now you can calculate your attachment size in a single click and sort files by file size.
 
 **Custom Folder Color (PRO)**
-Right-click on a specific folder to pick a distinct color. This helps differentiate it between numerous folders.
+Right-click on a specific folder to pick a distinct color. This helps differentiate it from numerous folders.
 
 **Multiple Tree View Styles (PRO)**
 Apart from the hierarchical tree view, you have the option to hide levels from the tree view, too. This flat tree view is very useful for those with a large number of folders.
@@ -142,7 +142,7 @@ With [FileBird Pro](https://1.envato.market/FileBird-Premium), you will be able 
 
 **PLUGINS**
 
-* WPML – Best WP plugin to translate and display your website in any languages
+* WPML – Best WP plugin to translate and display your website in any language
 * Polylang – A plugin that allows you to create a bilingual or multilingual WordPress site
 * Elementor Website Builder 
 * JetEngine
@@ -209,6 +209,10 @@ Happy Organizing! 😍
 
 == Changelog ==
 
+= Dec 5, 2025 - Version 6.5.2 =
+- Added: Auto rename when add new folder and it's name exists
+- Improved: Security
+
 = Oct 22, 2025 - Version 6.5.1 =
 - Improved: Security (Access Control Authenticated (Subscriber+))
 - Fixed: Inputs were not working properly
@@ -234,7 +238,7 @@ Happy Organizing! 😍
 - Fixed: Security (reported by researcher Revan Arifio)
 
 = Dec 11, 2024 - Version 6.4.2.1 =
-- Fixed: Zoom out feature in Gutenberg edior is disabled
+- Fixed: Zoom out feature in Gutenberg editor is disabled
 - Updated: Block uses Tree instead of Select
 
 = Oct 17, 2024 - Version 6.4.2 =
