@@ -1349,7 +1349,7 @@ article.type-projet {
 
 article.type-projet header {
     display: flex;
-    max-width: 1200px;
+    max-width: 100%;
     min-height: auto;
     justify-content: center;
     align-items: center;
