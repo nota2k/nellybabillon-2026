@@ -1,0 +1,143 @@
+# Translation of Plugins - ACF Quick Edit Fields - Stable (latest release) in French (France)
+# This file is distributed under the same license as the Plugins - ACF Quick Edit Fields - Stable (latest release) package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2021-03-17 00:53:10+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: GlotPress/4.0.0-rc.1\n"
+"Language: fr\n"
+"Project-Id-Version: Plugins - ACF Quick Edit Fields - Stable (latest release)\n"
+
+#. Author of the plugin
+#: index.php
+msgid "Jörn Lund"
+msgstr "Jörn Lund"
+
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:210
+msgid "Bulk Edit"
+msgstr "Modifications groupées"
+
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:199
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:216
+msgid "Disabled"
+msgstr "Désactivé"
+
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:198
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:215
+msgid "Enabled"
+msgstr "Activé"
+
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:193
+msgid "QuickEdit"
+msgstr "Modification rapide"
+
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:168
+msgid "Editing"
+msgstr "Modification"
+
+#: include/ACFQuickEdit/Admin/FieldGroup.php:112
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:133
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:137
+msgid "Column Weight"
+msgstr "Largueur de la colonne"
+
+#: include/ACFQuickEdit/Admin/FieldGroup.php:101
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:123
+msgid "Make this column sortable"
+msgstr "Rendre cette colonne triable"
+
+#: include/ACFQuickEdit/Admin/FieldGroup.php:100
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:118
+msgid "Sortable Column"
+msgstr "Colonne triable"
+
+#: include/ACFQuickEdit/Admin/FieldGroup.php:89
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:105
+msgid "Show Column"
+msgstr "Afficher la colonne"
+
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:85
+msgid "Column View"
+msgstr "Vue en colonne"
+
+#: include/ACFQuickEdit/Fields/Traits/ColumnLists.php:73
+msgid "(no title)"
+msgstr "(aucun titre)"
+
+#: include/ACFQuickEdit/Fields/Traits/InputCheckbox.php:72
+msgid "Add Choice"
+msgstr "Ajouter un choix"
+
+#: include/ACFQuickEdit/Fields/Traits/InputSelect.php:50
+msgid "— Select —"
+msgstr "— Sélectionner —"
+
+#: include/ACFQuickEdit/Fields/Field.php:361
+msgid "Do not change"
+msgstr "Ne pas modifier"
+
+#: include/ACFQuickEdit/Fields/FileField.php:44
+msgid "Remove File"
+msgstr "Supprimer le fichier"
+
+#: include/ACFQuickEdit/Fields/FileField.php:43
+msgid "Select File"
+msgstr "Sélectionner un fichier"
+
+#: include/ACFQuickEdit/Fields/LinkField.php:57
+msgid "Remove Link"
+msgstr "Supprimer le lien"
+
+#: include/ACFQuickEdit/Fields/LinkField.php:56
+msgid "Select Link"
+msgstr "Sélectionner un lien"
+
+#: include/ACFQuickEdit/Fields/TrueFalseField.php:61
+msgid "No"
+msgstr "Non"
+
+#: include/ACFQuickEdit/Fields/TrueFalseField.php:60
+msgid "Yes"
+msgstr "Oui"
+
+#: include/ACFQuickEdit/Fields/Field.php:492
+#: include/ACFQuickEdit/Fields/Traits/InputRadio.php:41
+#: include/ACFQuickEdit/Fields/TrueFalseField.php:38
+msgid "(No value)"
+msgstr "(aucune valeur)"
+
+#: include/ACFQuickEdit/Ajax/AjaxHandler.php:161
+msgid "Insufficient Permission"
+msgstr "Droit insuffisant"
+
+#: include/ACFQuickEdit/Ajax/AjaxHandler.php:156
+msgid "Nonce invalid"
+msgstr "Nonce non valide"
+
+#. Author URI of the plugin
+#: index.php
+msgid "https://github.com/mcguffin"
+msgstr "https://github.com/mcguffin"
+
+#. Plugin URI of the plugin
+#: index.php
+msgid "https://github.com/mcguffin/acf-quickedit-fields"
+msgstr "https://github.com/mcguffin/acf-quickedit-fields"
+
+#. Plugin Name of the plugin
+#: index.php
+msgid "ACF QuickEdit Fields"
+msgstr "ACF QuickEdit Fields"
+
+#: include/ACFQuickEdit/Admin/FieldGroup.php:113
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:134
+msgid "Columns with a higher weight will be pushed to the right. The leftmost WordPress column has a weight of <em>0</em>, the next one <em>100</em> and so on. Leave empty to place a column to the rightmost position."
+msgstr "Les colonnes les plus larges seront décalées à droite. La colonne WordPress la plus à gauche a une largeur de <em>0</em>, la suivante de <em>100</em> et ainsi de suite. Laissez vide pour placer une colonne dans la position la plus à droite."
+
+#: include/ACFQuickEdit/Admin/FieldGroup.php:90
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:89
+msgid "Show a column in the posts list table"
+msgstr "Afficher une colonne dans le tableau de liste des publications"

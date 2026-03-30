@@ -1,0 +1,35 @@
+/*
+Theme Name:   Nelly Babillon
+Template:     nellybabillon
+*/
+
+
+
+/*---- INDEX -----*/
+
+/*---- 
+	1.Global variables 
+	2.Normalize
+	3.Fonts
+	4.General
+	5.Projects
+	6.Single project
+	7.Sidebar
+
+----*/
+
+
+/*---- 1. Gobal variables ----*/
+
+html :where(.wp-block)
+{
+  max-width: inherit;
+}
+
+.editor-styles-wrapper{
+	background:url("assets/media/nnnoise.svg"),#fff;
+}
+
+.multiply{
+    mix-blend-mode: multiply;
+}
