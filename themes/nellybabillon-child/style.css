@@ -1404,7 +1404,7 @@ article.type-projet header .column {
 
 @media screen and (min-width: 900px) {
     article.type-projet header .column {
-        min-height: 500px;
+        min-height: 90vh;
     }
 
     .column#right {
@@ -1425,7 +1425,7 @@ article.type-projet header .post-thumbnail {
 article.type-projet header .arc {
     position: absolute;
     height: 100%;
-    max-width: 350px;
+    max-width: 450px;
     border: 3px solid blue;
     border-radius: 260px 260px 0px 0px;
     z-index: 2;
