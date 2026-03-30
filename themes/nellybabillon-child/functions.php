@@ -3,9 +3,10 @@
 // Include ACF fields for CV
 require_once get_stylesheet_directory() . '/inc/acf-cv.php';
 
-// Enqueue child theme styles
+// Enqueue child theme styles (version lue depuis l’entête de style.css)
 function enqueue_child_styles() {
-    wp_enqueue_style('child-style', get_stylesheet_directory_uri() . '/style.css', array('parent-style'), '2.0');
+    $version = wp_get_theme()->get('Version');
+    wp_enqueue_style('child-style', get_stylesheet_directory_uri() . '/style.css', array('parent-style'), $version);
 }
 
 add_action('wp_enqueue_scripts', 'enqueue_child_styles');
