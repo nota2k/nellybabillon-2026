@@ -3,10 +3,15 @@
 // Include ACF fields for CV
 require_once get_stylesheet_directory() . '/inc/acf-cv.php';
 
-// Enqueue child theme styles (version lue depuis l’entête de style.css)
+// Style enfant uniquement : le parent charge déjà nellybabillon-style (voir thème parent)
 function enqueue_child_styles() {
     $version = wp_get_theme()->get('Version');
-    wp_enqueue_style('child-style', get_stylesheet_directory_uri() . '/style.css', array('parent-style'), $version);
+    wp_enqueue_style(
+        'child-style',
+        get_stylesheet_directory_uri() . '/style.css',
+        array('nellybabillon-style'),
+        $version
+    );
 }
 
 add_action('wp_enqueue_scripts', 'enqueue_child_styles');
